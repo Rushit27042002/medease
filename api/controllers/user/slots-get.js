@@ -1,8 +1,8 @@
 // api/controllers/user/slots-get.js
 
 const moment = require("moment");
-const tryNew = require("../../services/tryNew");
 const SlotService = require("../../services/SlotService");
+const { select } = require("sails-mysql/helpers");
 
 module.exports = {
   friendlyName: "Find Slots by Date Input",
@@ -47,19 +47,6 @@ module.exports = {
           "Invalid date format. Please provide the date in YYYY-MM-DD format.",
         });
       }
-      //=========================custom===============================
-      // Fetch booked slots from the Appointment model
-    const bookedSlots = await Appointment.find({
-      where: { appointmentDate: date },
-      select: ["slotStartTime", "slotEndTime","doctorId"]
-    });
-
-    // Convert bookedSlots to a set for faster lookup
-    const bookedSlotSet = new Set(
-      bookedSlots.map(slot => `${slot.slotStartTime}-${slot.slotEndTime}-${slot.doctorId}`)
-    );
-    console.log(bookedSlotSet)
-    //====================================================================
       // Fetch schedules for all doctors
       const schedules = await schedule.find();
 
@@ -79,14 +66,28 @@ module.exports = {
         if (schedule[dayOfWeek]) {
           const { start, end } = schedule[dayOfWeek];
           const { slotDuration, breakDuration } = schedule;
-
+          
+          // console.log("New Doc slots===========================")
+          const bookedSlots = await Appointment.find({
+            where: { doctorId: schedule.doctorId, appointmentDate: date },
+            select: ["slotStartTime", "slotEndTime"]
+          });
+          
+          const transformedSlots = bookedSlots.map(slot => ({
+            startTime: slot.slotStartTime,  // Adjusting slotStartTime to endTime
+            endTime: slot.slotEndTime
+          }));
+          
+          // console.log(transformedSlots);
+          // console.log(bookedSlots.startTime)
           // Generate slots using the SlotService
           const doctorSlots = SlotService.generateSlots(
             start,
             end,
             slotDuration,
             breakDuration,
-            date
+            date,
+            transformedSlots
           );
 
           // Fetch the doctor information

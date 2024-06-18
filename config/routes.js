@@ -6,6 +6,7 @@ module.exports.routes = {
 
   "POST /api/v1/admin": { action: "admin/doc-create" },
   "GET /api/v1/admin": { action: "admin/doc-get" },
+  "GET /api/v1/admin/:page": { action: "admin/doc-get" },
   "PUT /api/v1/admin/:id": { action: "admin/doc-update" },
   "DELETE /api/v1/admin/:id": { action: "admin/doc-delete" },
 
