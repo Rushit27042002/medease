@@ -1,4 +1,4 @@
-// api/models/Schedule.js
+// api/models/schedule.js
 
 module.exports = {
   attributes: {

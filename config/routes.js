@@ -1,6 +1,8 @@
 module.exports.routes = {
   "/": { view: "pages/homepage" },
   "POST /api/v1/login": "AuthController.login",
+  "post /api/v1/send-mail": "MailController.sendEmail",
+  "POST /api/v1/generate": "AIController.generateResponse", //medical ai api 
 
   //===============Admin panel routes=======================
 
@@ -14,13 +16,12 @@ module.exports.routes = {
 
   "POST /api/v1/doctor": { action: "doctor-dash/schedule-add" },
   "GET /api/v1/doctor/schedule": { action: "doctor-dash/schedule-get" },
-  "GET /api/v1/doctor/appointments":{action:"doctor-dash/appointments-get"},
+  "GET /api/v1/doctor/appointments": { action: "doctor-dash/appointments-get" },
   "DELETE /api/v1/doctor/remove": { action: "doctor-dash/schedule-remove" },
+  "DELETE /api/v1/doctor/appointments/:id": { action: "doctor-dash/appointment-delete" },
 
   //===============    user routes    ======================
 
   "POST /api/v1/user": { action: "user/slots-get" },
-  // "POST /api/v1/user": { action: "user/get-availableSlots" },
   "POST /api/v1/user/appointment": { action: "user/slot-book" },
-
 };

@@ -52,6 +52,7 @@ module.exports = {
       // Generate JWT token with doctor data as payload
       const payload = {
         doctorId: doctor.id,
+        doctorName: doctor.name,
         email: doctor.email,
         role: "doctor",
       };

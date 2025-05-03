@@ -14,7 +14,7 @@
  */
 
 module.exports.models = {
-  connection: "mysql",
+  connection: "default",
   migrate: "alter",
 
   /***************************************************************************

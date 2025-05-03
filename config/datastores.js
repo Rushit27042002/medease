@@ -13,10 +13,17 @@
  * https://sailsjs.com/config/datastores
  */
 
+// module.exports.datastores = {
+//   mysql: {
+//       adapter: 'sails-mysql',
+//       url: 'mysql://root@localhost:3306/medease',
+//   },
+// };
+
 module.exports.datastores = {
-  mysql: {
-      adapter: 'sails-mysql',
-      url: 'mysql://root@localhost:3306/medease',
-  },
+  default: {
+    adapter: 'sails-postgresql',
+    url: 'postgresql://postgres:root@localhost:5432/medease',
+  }
 };
 
